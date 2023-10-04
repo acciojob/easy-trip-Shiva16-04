@@ -96,7 +96,7 @@ public class AirportService {
         if(flightBookings.size()==0 || flights.size()==0 || airports.size()==0)return 0;
         int numberOfPeople=0;
         for(Flight flight: flights.values()){
-            if((date.equals(flight.getFlightDate()) == true) &&
+            if((flight!=null) && (date.equals(flight.getFlightDate()) == true) &&
                     (flight.getFromCity().equals(airports.get(airportName).getCity()) || flight.getToCity().equals(airports.get(airportName).getCity()))){
                 numberOfPeople+=flightBookings.get(flight.getFlightId()).size();
             }
