@@ -93,10 +93,10 @@ public class AirportService {
         HashMap<Integer, List<Integer>>flightBookings=airportRepo.getFlightBookingsDatabase();
         HashMap<Integer, Flight>flights=airportRepo.getFlightsDatabase();
         int numberOfPeople=0;
-        for(Integer flightId:flightBookings.keySet()){
-            if(date.equals(flights.get(flightId).getFlightDate())==true &&
-                    (flights.get(flightId).getFromCity().equals(airportName)||flights.get(flightId).getToCity().equals(airportName))){
-                numberOfPeople+=flightBookings.get(flightId).size();
+        for(Flight flight: flights.values()){
+            if(date.equals(flight.getFlightDate())==true &&
+                    (flight.getFromCity().equals(City.valueOf(airportName))||flight.getToCity().equals(City.valueOf(airportName)))){
+                numberOfPeople+=flightBookings.get(flight.getFlightId()).size();
             }
         }
         return numberOfPeople;
@@ -125,7 +125,7 @@ public class AirportService {
                 if(airportName==null || airport.getNoOfTerminals()>count){
                     airportName=airport.getAirportName();
                 }else if(airport.getNoOfTerminals()==count){
-                    if(airportName.compareTo(airport.getAirportName())<0){
+                    if(airportName.compareTo(airport.getAirportName())>0){
                         airportName=airport.getAirportName();
                     }
                 }
@@ -137,10 +137,12 @@ public class AirportService {
     //Method 12: takeoff airportName-from-flightId
     public String getAirportNameFromFlightId(Integer flightId){
         HashMap<Integer, Flight>flights=airportRepo.getFlightsDatabase();
+        HashMap<String, Airport>airportDatabase=airportRepo.getAirportsDatabase();
         if(flights.containsKey(flightId)==true){
-            return flights.get(flightId).getFromCity().toString();
-        }else{
-            return null;
+            for(Airport airport: airportDatabase.values()){
+                if(flights.get(flightId).getFromCity().toString().equals(airport.getCity()))return airport.getAirportName();
+            }
         }
+        return null;
     }
 }
