@@ -92,10 +92,11 @@ public class AirportService {
     public int getNumberOfPeopleOnAirport(Date date, String airportName){
         HashMap<Integer, List<Integer>>flightBookings=airportRepo.getFlightBookingsDatabase();
         HashMap<Integer, Flight>flights=airportRepo.getFlightsDatabase();
+        HashMap<String, Airport>airports=airportRepo.getAirportsDatabase();
         int numberOfPeople=0;
         for(Flight flight: flights.values()){
-            if(date.equals(flight.getFlightDate())==true &&
-                    (flight.getFromCity().equals(City.valueOf(airportName))||flight.getToCity().equals(City.valueOf(airportName)))){
+            if((date.equals(flight.getFlightDate()) == true) &&
+                    (flight.getFromCity().equals(airports.get(airportName).getCity()) || flight.getToCity().equals(airports.get(airportName).getCity()))){
                 numberOfPeople+=flightBookings.get(flight.getFlightId()).size();
             }
         }
@@ -124,6 +125,7 @@ public class AirportService {
             if(airport.getNoOfTerminals()>=count){
                 if(airportName==null || airport.getNoOfTerminals()>count){
                     airportName=airport.getAirportName();
+                    count=airport.getNoOfTerminals();
                 }else if(airport.getNoOfTerminals()==count){
                     if(airportName.compareToIgnoreCase(airport.getAirportName())>0){
                         airportName=airport.getAirportName();
