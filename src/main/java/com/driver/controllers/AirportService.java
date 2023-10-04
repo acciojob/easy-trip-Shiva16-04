@@ -51,7 +51,6 @@ public class AirportService {
     public String cancelATicket(Integer flightId, Integer passengerId){
         HashMap<Integer, List<Integer>>flightBookings=airportRepo.getFlightBookingsDatabase();
         HashMap<Integer,List<Integer>>passengerBookings=airportRepo.getPassengerBookingsDatabase();
-        HashMap<Integer, Flight>flights=airportRepo.getFlightsDatabase();
         if(flightBookings.containsKey(flightId)==false||passengerBookings.containsKey(passengerId)==false){ //checking for a valid flightId and passengerId
             return "FAILURE";
         }else if(flightBookings.get(flightId).contains(passengerId)==false){ //checking for space availability
@@ -97,7 +96,7 @@ public class AirportService {
         if(flightBookings.size()==0 || flights.size()==0 || airports.size()==0)return 0;
         int numberOfPeople=0;
         for(Flight flight: flights.values()){
-            if((flight!=null) && (date.equals(flight.getFlightDate()) == true) &&
+            if((date.equals(flight.getFlightDate()) == true) &&
                     (flight.getFromCity().equals(airports.get(airportName).getCity()) || flight.getToCity().equals(airports.get(airportName).getCity()))){
                 numberOfPeople+=flightBookings.get(flight.getFlightId()).size();
             }
@@ -122,11 +121,11 @@ public class AirportService {
     //Method 11: get-largest-airport
     public String getLargestAirportName(){
         HashMap<String, Airport>airportDatabase=airportRepo.getAirportsDatabase();
-        String airportName=null;
+        String airportName="";
         int count=Integer.MIN_VALUE;
         for(Airport airport:airportDatabase.values()){
             if(airport.getNoOfTerminals()>=count){
-                if(airportName==null || airport.getNoOfTerminals()>count){
+                if(airportName=="" || airport.getNoOfTerminals()>count){
                     airportName=airport.getAirportName();
                     count=airport.getNoOfTerminals();
                 }else if(airport.getNoOfTerminals()==count){
@@ -148,6 +147,6 @@ public class AirportService {
                 if(flights.get(flightId).getFromCity().equals(airport.getCity()))return airport.getAirportName();
             }
         }
-        return null;
+        return "";
     }
 }
