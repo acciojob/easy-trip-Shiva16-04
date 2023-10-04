@@ -125,7 +125,7 @@ public class AirportService {
                 if(airportName==null || airport.getNoOfTerminals()>count){
                     airportName=airport.getAirportName();
                 }else if(airport.getNoOfTerminals()==count){
-                    if(airportName.compareTo(airport.getAirportName())>0){
+                    if(airportName.compareToIgnoreCase(airport.getAirportName())>0){
                         airportName=airport.getAirportName();
                     }
                 }
@@ -140,7 +140,7 @@ public class AirportService {
         HashMap<String, Airport>airportDatabase=airportRepo.getAirportsDatabase();
         if(flights.containsKey(flightId)==true){
             for(Airport airport: airportDatabase.values()){
-                if(flights.get(flightId).getFromCity().toString().equals(airport.getCity()))return airport.getAirportName();
+                if(flights.get(flightId).getFromCity().equals(airport.getCity()))return airport.getAirportName();
             }
         }
         return null;
