@@ -91,6 +91,7 @@ public class AirportService {
     //Method 9: get-number-of-people-on-airport-on/{date}
     public int getNumberOfPeopleOnAirport(Date date, String airportName){
         HashMap<Integer, List<Integer>>flightBookings=airportRepo.getFlightBookingsDatabase();
+        if(flightBookings.size()==0)return 0;
         HashMap<Integer, Flight>flights=airportRepo.getFlightsDatabase();
         HashMap<String, Airport>airports=airportRepo.getAirportsDatabase();
         int numberOfPeople=0;
