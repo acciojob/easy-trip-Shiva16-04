@@ -41,7 +41,9 @@ public class AirportService {
             return "FAILURE";
         }else if(flightBookings.get(flightId).size()==flights.get(flightId).getMaxCapacity()){ //checking for space availability
             return "FAILURE";
-        }else{
+        }else if(flightBookings.get(flightId).contains(passengerId)){
+            return "FAILURE";
+        } else{
             return airportRepo.bookATicket(flightId, passengerId);
         }
     }
@@ -122,8 +124,8 @@ public class AirportService {
             if(airport.getNoOfTerminals()>=count){
                 if(airportName==null || airport.getNoOfTerminals()>count){
                     airportName=airport.getAirportName();
-                }else{
-                    if(airportName.compareTo(airport.getAirportName())>0){
+                }else if(airport.getNoOfTerminals()==count){
+                    if(airportName.compareTo(airport.getAirportName())<0){
                         airportName=airport.getAirportName();
                     }
                 }
