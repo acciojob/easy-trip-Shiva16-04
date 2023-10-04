@@ -4,10 +4,9 @@ import com.driver.model.Airport;
 import com.driver.model.City;
 import com.driver.model.Flight;
 import com.driver.model.Passenger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -82,8 +81,10 @@ public class AirportService {
     public int calculateRevenueOfAFlight(Integer flightId){
         HashMap<Integer, List<Integer>>flightBookings=airportRepo.getFlightBookingsDatabase();
         int totalRevenue=0;
-        for(int i=0; i<flightBookings.get(flightId).size(); i++){
-            totalRevenue+=3000+(i*50);
+        if(flightBookings.containsKey(flightId)==true) {
+            for (int i = 0; i < flightBookings.get(flightId).size(); i++) {
+                totalRevenue += 3000 + (i * 50);
+            }
         }
         return totalRevenue;
     }
@@ -107,6 +108,7 @@ public class AirportService {
     //Method 10: shortest-time-travel-between-cities
     public double getShortestDurationOfPossibleBetweenTwoCities(City fromCity, City toCity){
         HashMap<Integer, Flight>flights=airportRepo.getFlightsDatabase();
+        if(flights.size()==0)return -1;
         double time=Double.MAX_VALUE;
         for(Flight flight:flights.values()){
             if(flight.getFromCity().equals(fromCity) && flight.getToCity().equals(toCity)){
