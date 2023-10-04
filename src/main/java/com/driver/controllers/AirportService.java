@@ -147,6 +147,6 @@ public class AirportService {
                 if(flights.get(flightId).getFromCity().equals(airport.getCity()))return airport.getAirportName();
             }
         }
-        return "";
+        return null;
     }
 }

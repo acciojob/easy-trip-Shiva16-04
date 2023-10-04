@@ -59,7 +59,7 @@ public class AirportRepository {
             getPassengerBookingsDatabase().put(passenger.getPassengerId(),new ArrayList<>());
             return "SUCCESS";
         }else{
-            return "";
+            return null;
         }
     }
 
@@ -70,7 +70,7 @@ public class AirportRepository {
             getFlightBookingsDatabase().put(flight.getFlightId(), new ArrayList<>());
             return "SUCCESS";
         }else{
-            return "";
+            return null;
         }
     }
 
