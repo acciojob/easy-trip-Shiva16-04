@@ -47,8 +47,10 @@ public class AirportController {
         try {
             return airportService.getNumberOfPeopleOnAirport(date, airportName);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+//            throw new RuntimeException(e);
+            return 0;
         }
+
     }
 
     //Method 7: calculate fare
