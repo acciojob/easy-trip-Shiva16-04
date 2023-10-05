@@ -89,19 +89,24 @@ public class AirportService {
     }
 
     //Method 9: get-number-of-people-on-airport-on/{date}
-    public int getNumberOfPeopleOnAirport(Date date, String airportName){
-        HashMap<Integer, List<Integer>>flightBookings=airportRepo.getFlightBookingsDatabase();
-        HashMap<Integer, Flight>flights=airportRepo.getFlightsDatabase();
-        HashMap<String, Airport>airports=airportRepo.getAirportsDatabase();
-        if(flightBookings.size()==0 || flights.size()==0 || airports.size()==0)return 0;
-        int numberOfPeople=0;
-        for(Flight flight: flights.values()){
-            if((date.equals(flight.getFlightDate()) == true) &&
-                    (flight.getFromCity().equals(airports.get(airportName).getCity()) || flight.getToCity().equals(airports.get(airportName).getCity()))){
-                numberOfPeople+=flightBookings.get(flight.getFlightId()).size();
+    public int getNumberOfPeopleOnAirport(Date date, String airportName) throws Exception {
+        try {
+            HashMap<Integer, List<Integer>> flightBookings = airportRepo.getFlightBookingsDatabase();
+            HashMap<Integer, Flight> flights = airportRepo.getFlightsDatabase();
+            HashMap<String, Airport> airports = airportRepo.getAirportsDatabase();
+            if (flightBookings.size() == 0 || flights.size() == 0 || airports.size() == 0) return 0;
+            int numberOfPeople = 0;
+
+            for (Flight flight : flights.values()) {
+                if ((date.equals(flight.getFlightDate()) == true) &&
+                        (flight.getFromCity().equals(airports.get(airportName).getCity()) || flight.getToCity().equals(airports.get(airportName).getCity()))) {
+                    numberOfPeople += flightBookings.get(flight.getFlightId()).size();
+                }
             }
+            return numberOfPeople;
+        }catch(Exception e){
+            throw new Exception("flights are not available on this day at this airport"+e.getMessage());
         }
-        return numberOfPeople;
     }
 
     //Method 10: shortest-time-travel-between-cities
