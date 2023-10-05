@@ -90,7 +90,7 @@ public class AirportService {
 
     //Method 9: get-number-of-people-on-airport-on/{date}
     public int getNumberOfPeopleOnAirport(Date date, String airportName) throws Exception {
-        try {
+
             HashMap<Integer, List<Integer>> flightBookings = airportRepo.getFlightBookingsDatabase();
             HashMap<Integer, Flight> flights = airportRepo.getFlightsDatabase();
             HashMap<String, Airport> airports = airportRepo.getAirportsDatabase();
@@ -104,9 +104,7 @@ public class AirportService {
                 }
             }
             return numberOfPeople;
-        }catch(Exception e){
-            throw new Exception("flights are not available on this day at this airport"+e.getMessage());
-        }
+
     }
 
     //Method 10: shortest-time-travel-between-cities
@@ -134,7 +132,7 @@ public class AirportService {
                     airportName=airport.getAirportName();
                     count=airport.getNoOfTerminals();
                 }else if(airport.getNoOfTerminals()==count){
-                    if(airportName.compareToIgnoreCase(airport.getAirportName())>0){
+                    if(airportName.compareTo(airport.getAirportName())>0){
                         airportName=airport.getAirportName();
                     }
                 }
